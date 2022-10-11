@@ -8,6 +8,27 @@ public class Gameboard {
     private int gameHeight;
 
 
+    public int getBombCount() {
+
+        return bombCount;
+
+    }
+
+    public int getGameLength() {
+
+        return gameLength;
+    }
+
+    public int getGameHeight() {
+        return gameHeight;
+    }
+
+    public Tile[][] getGameBoard() {
+        return gameBoard;
+
+
+    }
+
     public Gameboard(int gameLength, int gameHeight, int bombCount) {
         this.bombCount = bombCount;
         this.gameLength = gameLength;
@@ -22,7 +43,7 @@ public class Gameboard {
         this.gameLength = difficulty.getGameLength();
         this.gameHeight = difficulty.getGameHeight();
         this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
-        displayBoardFull(this.gameBoard);
+        //  displayBoardFull(this.gameBoard);
 
 
     }
@@ -108,11 +129,89 @@ public class Gameboard {
         System.out.println(output);
     }
 
+    public void displayBoardCurrent() {
+        String output = "     ";
 
+        for (int i = 0; i < gameHeight; i++) {
+            output += "  ";
+            output += (i + 1);
+            output += "   ";
+
+        }
+        for (int i = 1; i < gameLength + 1; i++) {
+            output += "\n";
+            output += "  ";
+
+            output += (i);
+            if (i > 9) {
+                output += " ";
+            } else {
+                output += "  ";
+            }
+            for (int j = 1; j < gameHeight + 1; j++) {
+                if (gameBoard[i][j].type == "bomb") {
+                    output += ANSI.colourRed;
+                } else if (gameBoard[i][j].type == "Safe") {
+                    output += ANSI.colourCyan;
+                }
+                output += gameBoard[i][j].type + ANSI.colourReset + ", ";
+
+            }
+
+
+        }
+        System.out.println(output);
+
+    }
+
+    public void displaycurrentHidden(){
+        String output = "     ";
+
+        for (int i = 0; i < gameHeight; i++) {
+            output += "  ";
+            output += (i + 1);
+            output += "   ";
+
+        }
+        for (int i = 1; i < gameLength + 1; i++) {
+            output += "\n";
+            output += "  ";
+
+            output += (i);
+            if (i > 9) {
+                output += " ";
+            } else {
+                output += "  ";
+            }
+
+
+            for (int j = 1; j < gameHeight + 1; j++) {
+                switch(gameBoard[i][j].state){
+
+                    case 0:
+                        output +=
+                    case 1:
+
+                    case 2:
+
+                }
+
+
+
+                if (gameBoard[i][j].type == "bomb") {
+                    output += ANSI.colourRed;
+                } else if (gameBoard[i][j].type == "Safe") {
+                    output += ANSI.colourCyan;
+                }
+                output += gameBoard[i][j].type + ANSI.colourReset + ", ";
+
+            }
+
+
+        }
+        System.out.println(output);
+
+
+
+    }
 }
-
-
-
-
-
-

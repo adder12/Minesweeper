@@ -2,7 +2,7 @@ public class Tile {
 
     protected int xCoord;
     protected int yCoord;
-    protected boolean flagged;
+    protected int state; // 0 - hidden, 1 - revealed, 2 - flagged
     protected String type;
 
     //  private Tile type;
@@ -13,6 +13,12 @@ public class Tile {
         coordArray[0] = this.xCoord;
         coordArray[1] = this.yCoord;
         return coordArray;
+
+    }
+
+    public String getType() {
+
+        return type;
 
     }
 
@@ -29,6 +35,12 @@ public class Tile {
     }
 
     public Tile() {
-        flagged = false;
+        state = 0;
+    }
+
+    public int getState() {
+
+
+        return state;
     }
 }
