@@ -17,6 +17,16 @@ public class Gameboard {
 
     }
 
+    public Gameboard(Difficulty difficulty) {
+        this.bombCount = difficulty.getBombs();
+        this.gameLength = difficulty.getGameLength();
+        this.gameHeight = difficulty.getGameHeight();
+        this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
+        displayBoardFull(this.gameBoard);
+
+
+    }
+
     public static Tile[][] generateBoard(int gameLength, int gameHeight, int bombCount) {
         int count = bombCount;
         //System.out.println(gameLength + "" + gameHeight);
