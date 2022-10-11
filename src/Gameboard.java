@@ -19,7 +19,7 @@ public class Gameboard {
 
     public static Tile[][] generateBoard(int gameLength, int gameHeight, int bombCount) {
         int count = bombCount;
-        System.out.println(gameLength + "" + gameHeight);
+        //System.out.println(gameLength + "" + gameHeight);
         double temp = gameLength * gameHeight;
         double bombChance = count / temp;
 
