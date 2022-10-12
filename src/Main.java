@@ -18,11 +18,14 @@ public class Main {
 
         System.out.println("\n Your mission today is to locate all " + game.getBombCount() + " bombs");
         System.out.println("There are " + game.getBombCount() + " bombs remaining");
+
+
         do {
 
             game.displaycurrentHidden();
 
             gameStatus = gamePlayLoop(game, scan);
+
 
         } while (gameStatus == 0);
 
@@ -37,6 +40,8 @@ public class Main {
     }
 
     public static int getCoord(Scanner scan, int max) {
+
+
         int coord = scan.nextInt() - 1;
         while (coord < 0 || coord > max - 1) {
 
@@ -47,6 +52,7 @@ public class Main {
 
 
         return coord;
+
     }
 
 
@@ -73,8 +79,8 @@ public class Main {
 
 
                     } else {
-                        game.setTileState(xCoord, yCoord, 2);
-                        game.zeroNeighborReveal(xCoord, yCoord);
+                        game.reveal(xCoord, yCoord);
+                        //  game.zeroNeighborReveal(xCoord, yCoord);
 
                     }
 
@@ -106,6 +112,10 @@ public class Main {
         if (game.getBombCount() == 0 && game.getFlagCount() == 0) {
             return 2;
         } else {
+
+            System.out.println(gameState[xCoord][yCoord].getNearbyBombs());
+            gameState[xCoord][yCoord].displayNeighbors();
+
             return 0;
         }
 

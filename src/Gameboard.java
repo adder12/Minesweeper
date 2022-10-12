@@ -154,20 +154,34 @@ public class Gameboard {
 
         for (int i = 0; i < gameHeight; i++) {
             output += "  ";
-            output += (i + 1);
-            output += "   ";
 
+            if (i + 1 > 9) {
+                output += (i + 1);
+
+
+            } else {
+                output += "0" + (i + 1);
+
+            }
+            output += " ";
+        }
+
+        output += "\n    ";
+        for (int i = 0; i < gameHeight; i++) {
+            output += "_____";
         }
         for (int i = 1; i < gameLength + 1; i++) {
             output += "\n";
-            output += "  ";
+            output += " ";
 
-            output += (i);
             if (i > 9) {
-                output += " ";
+                output += (i);
+
+
             } else {
-                output += "  ";
+                output += "0" + (i);
             }
+            output += " |";
             for (int j = 1; j < gameHeight + 1; j++) {
                 if (gameBoard[i][j].type == "bomb") {
                     output += ANSI.colourRed;
@@ -185,25 +199,39 @@ public class Gameboard {
     }
 
     public void displaycurrentHidden() {
-        String output = "    ";
+        String output = "   ";
 
         for (int i = 0; i < gameHeight; i++) {
             output += "  ";
-            output += (i + 1);
-            output += "  ";
 
+            if (i + 1 > 9) {
+                output += (i + 1);
+
+
+            } else {
+                output += "0" + (i + 1);
+
+            }
+            output += " ";
+        }
+
+        output += "\n    ";
+        for (int i = 0; i < gameHeight; i++) {
+            output += "_____";
         }
         for (int i = 1; i < gameLength + 1; i++) {
             output += "\n";
-            output += "  ";
+            output += " ";
 
-            output += (i);
+
             if (i > 9) {
-                output += " ";
-            } else {
-                output += "  ";
-            }
+                output += (i);
 
+
+            } else {
+                output += "0" + (1);
+            }
+            output += " |";
 
             for (int j = 1; j < gameHeight + 1; j++) {
                 if (gameBoard[i][j].type == "safe" && gameBoard[i][j].getState() == 2) {
@@ -271,17 +299,16 @@ public class Gameboard {
 
     }
 
-    public void zeroNeighborReveal(int xCoord, int yCoord) {
-        if (gameBoard[xCoord][yCoord].getNearbyBombs() == 0 && gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false) {
+    public void reveal(int xCoord, int yCoord) {
+        setTileState(xCoord, yCoord, 2);
+        if (gameBoard[xCoord][yCoord].getNearbyBombs() == 0 && gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false && gameBoard[xCoord][yCoord].getType().equals("Safe")) {
             gameBoard[xCoord][yCoord].setNeighbourMethodCheck();
             for (int k = -1; k <= 1; k++) {
-
                 for (int l = -1; l <= 1; l++) {
-                    if (k != 0 || l != 0 && xCoord + k >= 0 && yCoord + l >= l) {
-
+                    if (k != 0 || l != 0) {
                         gameBoard[xCoord + k][yCoord + l].setState(2);
-                        if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType() != "NULL") {
-                            zeroNeighborReveal(xCoord + l, yCoord + l);
+                        if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType().equals("Safe")) {
+                            reveal(xCoord + k, yCoord + l);
 
                         }
                     }
@@ -292,4 +319,6 @@ public class Gameboard {
         }
 
     }
+
+
 }
