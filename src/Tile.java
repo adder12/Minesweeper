@@ -5,6 +5,7 @@ public class Tile {
     protected int state; // 0 - hidden, 1 - revealed, 2 - flagged
     protected String type;
     protected boolean correctFlag;
+    protected boolean neighbourMethodCheck;
 
     protected String[] neighbours = new String[8];
 
@@ -46,13 +47,27 @@ public class Tile {
 
     public Tile() {
         state = 0;
+        neighbourMethodCheck = false;
 
+    }
+
+    public void setNeighbourMethodCheck() {
+        neighbourMethodCheck = !neighbourMethodCheck;
+    }
+
+    public boolean getNeighbourMethodCheck() {
+        return neighbourMethodCheck;
     }
 
     public int getState() {
 
 
         return state;
+    }
+
+    public void setState(int state) {
+        this.state = state;
+
     }
 
     public void neighborCount() {

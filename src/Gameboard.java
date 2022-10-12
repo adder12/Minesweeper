@@ -7,6 +7,16 @@ public class Gameboard {
     private int gameLength;
     private int gameHeight;
 
+    private int flagCount;
+
+    public void changeFlagCount(int change) {
+        this.flagCount += change;
+    }
+
+    public int getFlagCount() {
+        return flagCount;
+    }
+
     public int getBombCount() {
 
         return bombCount;
@@ -34,8 +44,8 @@ public class Gameboard {
 
     }
 
-    public void decrementBombCount() {
-        this.bombCount = this.bombCount - 1;
+    public void changeBombCount(int change) {
+        this.bombCount += change;
     }
 
     public Gameboard(int gameLength, int gameHeight, int bombCount) {
@@ -64,7 +74,7 @@ public class Gameboard {
         double temp = gameLength * gameHeight;
         double bombChance = count / temp;
 
-        System.out.println(bombChance);
+        // System.out.println(bombChance);
         double randChance;
         //Tile[][] board = new Tile[gameLength + 2][gameHeight + 2];
         Tile[][] board = emptyBoard(gameLength, gameHeight);
@@ -196,7 +206,7 @@ public class Gameboard {
 
 
             for (int j = 1; j < gameHeight + 1; j++) {
-                if (gameBoard[i][j].type == "safe" && gameBoard[i][j].state == 2) {
+                if (gameBoard[i][j].type == "safe" && gameBoard[i][j].getState() == 2) {
                     output += ANSI.colourCyan;
                     //} else if (gameBoard[i][j].type == "Safe") {
                     //     output += ANSI.colourCyan;
@@ -207,16 +217,18 @@ public class Gameboard {
                         output += "????";
                         break;
                     case 1:
+                        output += ANSI.colourYellow;
                         output += "FLAG";
+                        output += ANSI.colourReset;
                         break;
                     case 2:
-
+                        output += ANSI.colourCyan;
                         output += " " + gameBoard[i][j].getNearbyBombs() + "  ";
+                        output += ANSI.colourReset;
                         break;
 
                 }
                 output += " ";
-                output += ANSI.colourReset;
 
                 //output += gameBoard[i][j].type + ANSI.colourReset + ", ";
 
@@ -230,8 +242,7 @@ public class Gameboard {
     }
 
     public void checkNeighbor() {
-        int neighborX;
-        int neighbourY;
+
         for (int i = 1; i < gameLength; i++) {
             for (int j = 1; j < gameHeight; j++) {
                 int n = 0;
@@ -257,6 +268,28 @@ public class Gameboard {
     public void switchCorrectState(int xCoord, int yCoord) {
 
         gameBoard[xCoord][yCoord].setCorrectFlag();
+
+    }
+
+    public void zeroNeighborReveal(int xCoord, int yCoord) {
+        if (gameBoard[xCoord][yCoord].getNearbyBombs() == 0 && gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false) {
+            gameBoard[xCoord][yCoord].setNeighbourMethodCheck();
+            for (int k = -1; k <= 1; k++) {
+
+                for (int l = -1; l <= 1; l++) {
+                    if (k != 0 || l != 0 && xCoord + k >= 0 && yCoord + l >= l) {
+
+                        gameBoard[xCoord + k][yCoord + l].setState(2);
+                        if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType() != "NULL") {
+                            zeroNeighborReveal(xCoord + l, yCoord + l);
+
+                        }
+                    }
+                }
+            }
+
+
+        }
 
     }
 }

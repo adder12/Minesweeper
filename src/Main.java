@@ -13,7 +13,7 @@ public class Main {
 
         Gameboard game = new Gameboard(difficulty);
 
-        int gameStatus = 0;
+        int gameStatus = 0; //0 = playing, 1 = failed, 2 = win
         System.out.println("Hello " + ANSI.colourCyan + "Minesweeper" + ANSI.colourReset);
 
         System.out.println("\n Your mission today is to locate all " + game.getBombCount() + " bombs");
@@ -74,36 +74,41 @@ public class Main {
 
                     } else {
                         game.setTileState(xCoord, yCoord, 2);
+                        game.zeroNeighborReveal(xCoord, yCoord);
 
                     }
 
                 case 'f':
-
+                    moveCorrect = true;
                     if (gameState[xCoord][yCoord].getState() == 0) {
                         game.setTileState(xCoord, yCoord, 1);
+                        game.changeFlagCount(-1);
                         if (gameState[xCoord][yCoord].getType() == "bomb") {
                             game.switchCorrectState(xCoord, yCoord);
-                            game.decrementBombCount();
+                            game.changeBombCount(-1);
 
-                        } else if (gameState[xCoord][yCoord].getState() == 1) {
-                            game.setTileState(xCoord, yCoord, 0);
-                            if (gameState[xCoord][yCoord].getType() == "bomb") {
-                                game.switchCorrectState(xCoord, yCoord);
-                            }
+
                         }
 
+                    } else if (gameState[xCoord][yCoord].getState() == 1) {
+                        game.setTileState(xCoord, yCoord, 0);
+                        if (gameState[xCoord][yCoord].getType() == "bomb") {
+                            game.switchCorrectState(xCoord, yCoord);
+                            game.changeBombCount(+1);
+                        }
                     }
+
+
             }
-
-
         } while (!moveCorrect);
-        if (game.getBombCount() == 0) {
+
+
+        if (game.getBombCount() == 0 && game.getFlagCount() == 0) {
             return 2;
         } else {
             return 0;
         }
 
     }
-
-
 }
+
