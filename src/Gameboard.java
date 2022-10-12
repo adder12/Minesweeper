@@ -93,11 +93,11 @@ public class Gameboard {
                     // System.out.println(bombChance);
                     //board[0][j] = new NullTile(0, j);
                     // board[gameLength + 1][j] = new NullTile(gameHeight + 1, j);
-                    if (randChance < bombChance && count != 0 && board[i][j].type != "Bomb") {
+                    if (randChance < bombChance && count != 0 && !board[i][j].type.equals("Bomb")) {
                         board[i][j] = new Bomb(i, j);
                         count--;
                         //   System.out.println("bomb placed");
-                    } else if (board[i][j].type != "bomb") {
+                    } else if (!board[i][j].type.equals("bomb")) {
                         //   System.out.println(i + "  " + j);
                         board[i][j] = new SafeTile(i, j);
                     }
@@ -137,9 +137,9 @@ public class Gameboard {
         for (int i = 0; i < gameBoard.length; i++) {
             output += "\n";
             for (int j = 0; j < gameBoard[i].length; j++) {
-                if (gameBoard[i][j].type == "bomb") {
+                if (gameBoard[i][j].type.equals("bomb")) {
                     output += ANSI.colourRed;
-                } else if (gameBoard[i][j].type == "Safe") {
+                } else if (gameBoard[i][j].type.equals("Safe")) {
                     output += ANSI.colourCyan;
                 }
                 output += gameBoard[i][j].type + ANSI.colourReset + ", ";
@@ -183,9 +183,9 @@ public class Gameboard {
             }
             output += " |";
             for (int j = 1; j < gameHeight + 1; j++) {
-                if (gameBoard[i][j].type == "bomb") {
+                if (gameBoard[i][j].type.equals("bomb")) {
                     output += ANSI.colourRed;
-                } else if (gameBoard[i][j].type == "Safe") {
+                } else if (gameBoard[i][j].type.equals("Safe")) {
                     output += ANSI.colourCyan;
                 }
                 output += gameBoard[i][j].type + ANSI.colourReset + ", ";
@@ -229,12 +229,12 @@ public class Gameboard {
 
 
             } else {
-                output += "0" + (1);
+                output += "0" + (i);
             }
             output += " |";
 
             for (int j = 1; j < gameHeight + 1; j++) {
-                if (gameBoard[i][j].type == "safe" && gameBoard[i][j].getState() == 2) {
+                if (gameBoard[i][j].type.equals("safe") && gameBoard[i][j].getState() == 2) {
                     output += ANSI.colourCyan;
                     //} else if (gameBoard[i][j].type == "Safe") {
                     //     output += ANSI.colourCyan;
@@ -301,24 +301,23 @@ public class Gameboard {
 
     public void reveal(int xCoord, int yCoord) {
         setTileState(xCoord, yCoord, 2);
-        if (gameBoard[xCoord][yCoord].getNearbyBombs() == 0 && gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false && gameBoard[xCoord][yCoord].getType().equals("Safe")) {
+        if (/*gameBoard[xCoord][yCoord].getNearbyBombs() == 0 &&*/ gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false && gameBoard[xCoord][yCoord].getType().equals("Safe")) {
+            if (gameBoard[xCoord][yCoord].getType().equals("bomb")) {
+                System.out.println("function performed on bomb");
+            }
             gameBoard[xCoord][yCoord].setNeighbourMethodCheck();
             for (int k = -1; k <= 1; k++) {
                 for (int l = -1; l <= 1; l++) {
                     if (k != 0 || l != 0) {
                         gameBoard[xCoord + k][yCoord + l].setState(2);
                         if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType().equals("Safe")) {
+
                             reveal(xCoord + k, yCoord + l);
 
                         }
                     }
                 }
             }
-
-
         }
-
     }
-
-
 }
