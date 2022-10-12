@@ -29,12 +29,18 @@ public class Gameboard {
 
     }
 
+    public void setTileState(int xCoord, int yCoord, int state) {
+        this.gameBoard[xCoord][yCoord].state = state;
+
+
+    }
+
     public Gameboard(int gameLength, int gameHeight, int bombCount) {
         this.bombCount = bombCount;
         this.gameLength = gameLength;
         this.gameHeight = gameHeight;
         this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
-        displayBoardFull(this.gameBoard);
+        this.displayBoardFull();
 
     }
 
@@ -43,6 +49,7 @@ public class Gameboard {
         this.gameLength = difficulty.getGameLength();
         this.gameHeight = difficulty.getGameHeight();
         this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
+        checkNeighbor();
         //  displayBoardFull(this.gameBoard);
 
 
@@ -110,19 +117,19 @@ public class Gameboard {
         return board;
     }
 
-    public static void displayBoardFull(Tile[][] board) {
+    public void displayBoardFull() {
 
         String output = "";
 
-        for (int i = 0; i < board.length; i++) {
+        for (int i = 0; i < gameBoard.length; i++) {
             output += "\n";
-            for (int j = 0; j < board[i].length; j++) {
-                if (board[i][j].type == "bomb") {
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                if (gameBoard[i][j].type == "bomb") {
                     output += ANSI.colourRed;
-                } else if (board[i][j].type == "Safe") {
+                } else if (gameBoard[i][j].type == "Safe") {
                     output += ANSI.colourCyan;
                 }
-                output += board[i][j].type + ANSI.colourReset + ", ";
+                output += gameBoard[i][j].type + ANSI.colourReset + ", ";
             }
         }
 
@@ -164,13 +171,13 @@ public class Gameboard {
 
     }
 
-    public void displaycurrentHidden(){
-        String output = "     ";
+    public void displaycurrentHidden() {
+        String output = "    ";
 
         for (int i = 0; i < gameHeight; i++) {
             output += "  ";
             output += (i + 1);
-            output += "   ";
+            output += "  ";
 
         }
         for (int i = 1; i < gameLength + 1; i++) {
@@ -186,24 +193,28 @@ public class Gameboard {
 
 
             for (int j = 1; j < gameHeight + 1; j++) {
-                switch(gameBoard[i][j].state){
+                if (gameBoard[i][j].type == "safe" && gameBoard[i][j].state == 2) {
+                    output += ANSI.colourCyan;
+                    //} else if (gameBoard[i][j].type == "Safe") {
+                    //     output += ANSI.colourCyan;
+                }
+                switch (gameBoard[i][j].state) {
 
                     case 0:
-                        output +=
+                        output += "????";
+                        break;
                     case 1:
-
+                        output += "FLAG";
+                        break;
                     case 2:
+                        output += gameBoard[i][j].getType();
+                        break;
 
                 }
+                output += " ";
+                output += ANSI.colourReset;
 
-
-
-                if (gameBoard[i][j].type == "bomb") {
-                    output += ANSI.colourRed;
-                } else if (gameBoard[i][j].type == "Safe") {
-                    output += ANSI.colourCyan;
-                }
-                output += gameBoard[i][j].type + ANSI.colourReset + ", ";
+                //output += gameBoard[i][j].type + ANSI.colourReset + ", ";
 
             }
 
@@ -212,6 +223,28 @@ public class Gameboard {
         System.out.println(output);
 
 
+    }
+
+    public void checkNeighbor() {
+        int neighborX;
+        int neighbourY;
+        for (int i = 1; i < gameLength; i++) {
+            for (int j = 1; j < gameHeight; j++) {
+                int n = 0;
+                for (int k = -1; k <= 1; k++) {
+
+                    for (int l = -1; l <= 1; l++) {
+                        if (k != 0 || l != 0) {
+
+                            gameBoard[i][j].neighbours[n] = gameBoard[i + k][j + l].getType();
+                            n++;
+                        }
+                    }
+                }
+            }
+        }
+        //gameBoard[4][4].displayNeighbors();
 
     }
+
 }

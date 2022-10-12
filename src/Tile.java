@@ -5,6 +5,10 @@ public class Tile {
     protected int state; // 0 - hidden, 1 - revealed, 2 - flagged
     protected String type;
 
+    protected String[] neighbours = new String[8];
+
+    protected int nearbyBombs;
+
     //  private Tile type;
 
 
@@ -36,6 +40,7 @@ public class Tile {
 
     public Tile() {
         state = 0;
+
     }
 
     public int getState() {
@@ -43,4 +48,20 @@ public class Tile {
 
         return state;
     }
+
+    public void neighborCount() {
+        
+    }
+
+    public void displayNeighbors() {
+        String output = "";
+        for (int i = 0; i < neighbours.length; i++) {
+            System.out.println(neighbours[0]);
+            output += neighbours[i] + " ";
+
+
+        }
+        System.out.println(output);
+    }
+
 }
