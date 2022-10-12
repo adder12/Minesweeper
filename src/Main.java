@@ -13,7 +13,7 @@ public class Main {
 
         Gameboard game = new Gameboard(difficulty);
 
-        int gameStatus = 0; //0 = playing, 1 = failed, 2 = win
+        int gameStatus; //0 = playing, 1 = failed, 2 = win
         System.out.println("Hello " + ANSI.colourCyan + "Minesweeper" + ANSI.colourReset);
 
         System.out.println("\n Your mission today is to locate all " + game.getBombCount() + " bombs");
@@ -58,9 +58,9 @@ public class Main {
 
     public static int gamePlayLoop(Gameboard game, Scanner scan) {
         Tile[][] gameState = game.getGameBoard();
-        int xCoord = 0;
-        int yCoord = 0;
-        char move = ' ';
+        int xCoord;
+        int yCoord;
+        char move;
         System.out.println("Please enter the row Coordinate you wish to check?");
         xCoord = getCoord(scan, game.getGameLength()) + 1;
         System.out.println("Please enter the column Coordinate you wish to check?");

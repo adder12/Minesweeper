@@ -44,7 +44,7 @@ public class Difficulty {
         Difficulty chosenDiff = null;
 
         boolean diffCorrect = false;
-        System.out.println("\n\n\n" + "What Difficulty would you like to play, Easy(E), Medium(M), Hard(H) or Custom(C)");
+        System.out.println("\n\n\nWhat Difficulty would you like to play, Easy(E), Medium(M), Hard(H) or Custom(C)");
         do {
             enteredDiff = Character.toLowerCase(scan.next().charAt(0));
             switch (enteredDiff) {
@@ -66,9 +66,9 @@ public class Difficulty {
                     diffCorrect = true;
                     break;
                 case 'c':
-                    int gameLength = 0;
-                    int gameHeight = 0;
-                    int bombs = 0;
+                    int gameLength;
+                    int gameHeight;
+                    int bombs;
                     System.out.println("You have selected custom difficulty");
                     System.out.println("Please enter the length of game board you wish to play on");
                     gameLength = scan.nextInt();

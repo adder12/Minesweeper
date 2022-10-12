@@ -188,7 +188,7 @@ public class Gameboard {
                 } else if (gameBoard[i][j].type.equals("Safe")) {
                     output += ANSI.colourCyan;
                 }
-                output += gameBoard[i][j].type + ANSI.colourReset + ", ";
+                output += gameBoard[i][j].type + ANSI.colourReset + " ";
 
             }
 
@@ -199,7 +199,7 @@ public class Gameboard {
     }
 
     public void displaycurrentHidden() {
-        String output = "   ";
+        String output = "    ";
 
         for (int i = 0; i < gameHeight; i++) {
             output += "  ";
@@ -301,6 +301,7 @@ public class Gameboard {
 
     public void reveal(int xCoord, int yCoord) {
         setTileState(xCoord, yCoord, 2);
+        gameBoard[xCoord][yCoord].displayNeighbors();
         if (/*gameBoard[xCoord][yCoord].getNearbyBombs() == 0 &&*/ gameBoard[xCoord][yCoord].getNeighbourMethodCheck() == false && gameBoard[xCoord][yCoord].getType().equals("Safe")) {
             if (gameBoard[xCoord][yCoord].getType().equals("bomb")) {
                 System.out.println("function performed on bomb");
