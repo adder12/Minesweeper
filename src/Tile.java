@@ -4,6 +4,7 @@ public class Tile {
     protected int yCoord;
     protected int state; // 0 - hidden, 1 - revealed, 2 - flagged
     protected String type;
+    protected boolean correctFlag;
 
     protected String[] neighbours = new String[8];
 
@@ -32,6 +33,11 @@ public class Tile {
 
     }
 
+    public int getNearbyBombs() {
+
+        return nearbyBombs;
+    }
+
     public Tile(int xCoord, int yCoord/*, Tile type*/) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
@@ -50,7 +56,12 @@ public class Tile {
     }
 
     public void neighborCount() {
-        
+        for (String type : neighbours) {
+
+            if (type == "bomb") {
+                this.nearbyBombs++;
+            }
+        }
     }
 
     public void displayNeighbors() {
@@ -64,4 +75,7 @@ public class Tile {
         System.out.println(output);
     }
 
+    public void setCorrectFlag() {
+        this.correctFlag = !this.correctFlag;
+    }
 }

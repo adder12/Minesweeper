@@ -7,7 +7,6 @@ public class Gameboard {
     private int gameLength;
     private int gameHeight;
 
-
     public int getBombCount() {
 
         return bombCount;
@@ -33,6 +32,10 @@ public class Gameboard {
         this.gameBoard[xCoord][yCoord].state = state;
 
 
+    }
+
+    public void decrementBombCount() {
+        this.bombCount = this.bombCount - 1;
     }
 
     public Gameboard(int gameLength, int gameHeight, int bombCount) {
@@ -207,7 +210,8 @@ public class Gameboard {
                         output += "FLAG";
                         break;
                     case 2:
-                        output += gameBoard[i][j].getType();
+
+                        output += " " + gameBoard[i][j].getNearbyBombs() + "  ";
                         break;
 
                 }
@@ -241,10 +245,18 @@ public class Gameboard {
                         }
                     }
                 }
+
+
+                gameBoard[i][j].neighborCount();
             }
         }
         //gameBoard[4][4].displayNeighbors();
 
     }
 
+    public void switchCorrectState(int xCoord, int yCoord) {
+
+        gameBoard[xCoord][yCoord].setCorrectFlag();
+
+    }
 }

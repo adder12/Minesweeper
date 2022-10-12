@@ -4,8 +4,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-
-
         Scanner scan = new Scanner(System.in);
 
         System.out.println(ANSI.colourCyan + "Hello and welcome to " + ANSI.colourRed + "!!MINESWEEPER!!" + ANSI.colourReset);
@@ -19,14 +17,12 @@ public class Main {
         System.out.println("Hello " + ANSI.colourCyan + "Minesweeper" + ANSI.colourReset);
 
         System.out.println("\n Your mission today is to locate all " + game.getBombCount() + " bombs");
-
-
+        System.out.println("There are " + game.getBombCount() + " bombs remaining");
         do {
 
-
             game.displaycurrentHidden();
-            System.out.println("There are " + game.getBombCount() + " bombs remaining");
-            gamePlayLoop(game, scan);
+
+            gameStatus = gamePlayLoop(game, scan);
 
         } while (gameStatus == 0);
 
@@ -35,6 +31,8 @@ public class Main {
             System.out.println("Uh oh!!! You hit a bomb, unlucky");
             game.displayBoardCurrent();
 
+        } else {
+            System.out.println("Congratulations Commander, you cleared the field");
         }
     }
 
@@ -56,23 +54,56 @@ public class Main {
         Tile[][] gameState = game.getGameBoard();
         int xCoord = 0;
         int yCoord = 0;
-        System.out.println("Please enter the x Coordinate you wish to check");
+        char move = ' ';
+        System.out.println("Please enter the row Coordinate you wish to check?");
         xCoord = getCoord(scan, game.getGameLength()) + 1;
-        System.out.println("Please enter the y Coordinate you wish to check");
+        System.out.println("Please enter the column Coordinate you wish to check?");
         yCoord = getCoord(scan, game.getGameHeight()) + 1;
-//TODO add map clearing functionality
-        //TODO add bomb sensing functionality
 
-        if (gameState[xCoord][yCoord].getType() == "bomb") {
-            return 1;
+        System.out.println("you have selected " + xCoord + "," + yCoord + ". Would you like to reveal(r) or flag/unflag(f) this tile");
+        move = scan.next().charAt(0);
+
+        boolean moveCorrect = false;
+        do {
+            switch (Character.toLowerCase(move)) {
+                case 'r':
+                    moveCorrect = true;
+                    if (gameState[xCoord][yCoord].getType() == "bomb") {
+                        return 1;
 
 
+                    } else {
+                        game.setTileState(xCoord, yCoord, 2);
+
+                    }
+
+                case 'f':
+
+                    if (gameState[xCoord][yCoord].getState() == 0) {
+                        game.setTileState(xCoord, yCoord, 1);
+                        if (gameState[xCoord][yCoord].getType() == "bomb") {
+                            game.switchCorrectState(xCoord, yCoord);
+                            game.decrementBombCount();
+
+                        } else if (gameState[xCoord][yCoord].getState() == 1) {
+                            game.setTileState(xCoord, yCoord, 0);
+                            if (gameState[xCoord][yCoord].getType() == "bomb") {
+                                game.switchCorrectState(xCoord, yCoord);
+                            }
+                        }
+
+                    }
+            }
+
+
+        } while (!moveCorrect);
+        if (game.getBombCount() == 0) {
+            return 2;
         } else {
-            game.setTileState(xCoord, yCoord, 2);
             return 0;
         }
 
-
     }
+
 
 }
