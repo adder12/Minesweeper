@@ -18,13 +18,10 @@ public class GameClass {
     }
 
     public int getBombCount() {
-
         return bombCount;
-
     }
 
     public int getGameLength() {
-
         return gameLength;
     }
 
@@ -34,14 +31,10 @@ public class GameClass {
 
     public Tile[][] getGameBoard() {
         return gameBoard;
-
-
     }
 
     public void setTileState(int xCoord, int yCoord, int state) {
         this.gameBoard[xCoord][yCoord].state = state;
-
-
     }
 
     public void changeBombCount(int change) {
@@ -55,7 +48,6 @@ public class GameClass {
         this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
         this.flagCount = bombCount;
         this.displayBoardFull();
-
     }
 
     public GameClass(Difficulty difficulty) {
@@ -67,64 +59,42 @@ public class GameClass {
         this.flagCount = difficulty.getBombs();
 
 
-
     }
 
     public static Tile[][] generateBoard(int gameLength, int gameHeight, int bombCount) {
         int count = bombCount;
-
-        double temp =(double) gameLength * gameHeight;
+        double temp = (double) gameLength * gameHeight;
         double bombChance = count / temp;
-
-
         double randChance;
-
         Tile[][] board = emptyBoard(gameLength, gameHeight);
-
-
         do {
-
-
             for (int i = 1; i <= gameLength; i++) {
-
                 for (int j = 1; j <= gameHeight; j++) {
                     randChance = Math.random();
-
-
                     if (randChance < bombChance && count != 0 && !board[i][j].type.equals("Bomb")) {
                         board[i][j] = new Bomb(i, j);
                         count--;
-
                     } else if (!board[i][j].type.equals("bomb")) {
-
                         board[i][j] = new SafeTile(i, j);
                     }
                 }
             }
-
         } while (count != 0);
-
         return board;
     }
 
     public static Tile[][] emptyBoard(int length, int height) {
         Tile[][] board = new Tile[length + 2][height + 2];
-
         for (int i = 0; i < board.length; i++) {
-
             for (int j = 0; j < board[i].length; j++) {
-
                 board[i][j] = new NullTile(i, j);
             }
-
         }
-
         return board;
     }
 
     public void displayBoardFull() {
         StringBuilder output = new StringBuilder();
-
 
         for (int i = 0; i < gameBoard.length; i++) {
             output.append("\n");
@@ -139,39 +109,30 @@ public class GameClass {
                 output.append(", ");
             }
         }
-
         System.out.println(output);
     }
 
     public void displayBoardCurrent() {
         StringBuilder output = new StringBuilder();
-
+        output.append("    ");
         for (int i = 0; i < gameHeight; i++) {
             output.append("  ");
-
             if (i + 1 > 9) {
                 output.append(i + 1);
-
-
             } else {
                 output.append("0");
                 output.append((i + 1));
-
             }
             output.append(" ");
         }
-
         output.append("\n    ");
         output.append("_____".repeat(Math.max(0, gameHeight)));
 
         for (int i = 1; i < gameLength + 1; i++) {
             output.append("\n");
             output.append(" ");
-
             if (i > 9) {
                 output.append(i);
-
-
             } else {
                 output.append("0");
                 output.append((i));
@@ -186,92 +147,67 @@ public class GameClass {
                 output.append(gameBoard[i][j].type);
                 output.append(ANSI.colourReset);
                 output.append(" ");
-
             }
-
-
         }
         System.out.println(output);
-
     }
 
     public void displayCurrentHidden() {
         StringBuilder output = new StringBuilder();
-        output.append("   ");
+        output.append("    ");
         for (int i = 0; i < gameHeight; i++) {
             output.append("  ");
-
             if (i + 1 > 9) {
                 output.append(i + 1);
-
-
             } else {
                 output.append("0");
                 output.append((i + 1));
-
             }
             output.append(" ");
         }
-
         output.append("\n    ");
         output.append("_____".repeat(Math.max(0, gameHeight)));
         for (int i = 1; i < gameLength + 1; i++) {
             output.append("\n");
             output.append(" ");
-
-
             if (i > 9) {
                 output.append(i);
-
-
             } else {
                 output.append("0");
                 output.append((i));
             }
             output.append(" |");
-
             for (int j = 1; j < gameHeight + 1; j++) {
-                if (gameBoard[i][j].type.equals("safe") && gameBoard[i][j].getState() == 2) {
+               /* if (gameBoard[i][j].type.equals("safe") && gameBoard[i][j].getState() == 2) {
                     output.append(ANSI.colourCyan);
 
-                }
+                }*/
                 switch (gameBoard[i][j].state) {
-
                     case 0:
                         output.append("????");
                         break;
                     case 1:
                         output.append(ANSI.colourYellow);
                         output.append("FLAG");
-                        output.append( ANSI.colourReset);
-                        break;
-                    case 2:
-                        if(gameBoard[i][j].getNearbyBombs() != 0){
-output.append(ANSI.colourMagenta);
-                        }else{
-                        output.append(ANSI.colourCyan);
-                        }
-                        output.append( " ");
-                        output.append(gameBoard[i][j].getNearbyBombs());
-                        output.append("  ");
                         output.append(ANSI.colourReset);
                         break;
-
+                    case 2:
+                       /* if (gameBoard[i][j].getNearbyBombs() != 0) {
+                            output.append(ANSI.colourMagenta);
+                        } else {
+                            output.append(ANSI.colourCyan);
+                        }*/
+                        output.append(" ");
+                        output.append(gameBoard[i][j].getNearbyBombs());
+                        output.append("  ");
+                        //         output.append(ANSI.colourReset);
+                        break;
                 }
                 output.append(" ");
-
-
-
             }
-
-
         }
         System.out.println(output);
-
-
     }
-
-
 
     public void checkNeighbor() {
 
@@ -288,36 +224,26 @@ output.append(ANSI.colourMagenta);
                         }
                     }
                 }
-
-
                 gameBoard[i][j].neighborCount();
             }
         }
-
-
     }
 
     public void switchCorrectState(int xCoord, int yCoord) {
-
         gameBoard[xCoord][yCoord].setCorrectFlag();
-
     }
 
     public void reveal(int xCoord, int yCoord) {
-
-
         if (!gameBoard[xCoord][yCoord].getNeighbourMethodCheck() && gameBoard[xCoord][yCoord].getType().equals("Safe") && !gameBoard[xCoord][yCoord].getType().equals("bomb")) {
-
             setTileState(xCoord, yCoord, 2);
             gameBoard[xCoord][yCoord].setNeighbourMethodCheck();
             for (int k = -1; k <= 1; k++) {
                 for (int l = -1; l <= 1; l++) {
                     if (k != 0 || l != 0) {
-                        gameBoard[xCoord + k][yCoord + l].setState(2);
+                        if (!gameBoard[xCoord + k][yCoord + l].getType().equals("bomb"))
+                            gameBoard[xCoord + k][yCoord + l].setState(2);
                         if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType().equals("Safe")) {
-
                             this.reveal(xCoord + k, yCoord + l);
-
                         }
                     }
                 }

@@ -8,13 +8,8 @@ public class Tile {
     protected String type;
     protected boolean correctFlag;
     protected boolean neighbourMethodCheck;
-
     protected String[] neighbours = new String[8];
-
     protected int nearbyBombs;
-
-
-
 
     public int[] getCoords() {
         int[] coordArray = new int[2];
