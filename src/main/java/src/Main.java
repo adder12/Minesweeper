@@ -76,7 +76,7 @@ public class Main {
             switch (Character.toLowerCase(move)) {
                 case 'r':
                     moveCorrect = true;
-                    if (gameState[xCoord][yCoord].getType() == "bomb") {
+                    if (gameState[xCoord][yCoord].getType().equals("bomb") ){
                         return 1;
 
 
@@ -92,7 +92,7 @@ public class Main {
                         // System.out.println("flagged");
                         game.setTileState(xCoord, yCoord, 1);
                         game.changeFlagCount(-1);
-                        if (gameState[xCoord][yCoord].getType() == "bomb") {
+                        if (gameState[xCoord][yCoord].getType().equals("bomb")) {
                             game.switchCorrectState(xCoord, yCoord);
                             game.changeBombCount(-1);
 
@@ -103,7 +103,7 @@ public class Main {
                         //  System.out.println("unflagged");
                         game.setTileState(xCoord, yCoord, 0);
                         game.changeFlagCount(1);
-                        if (gameState[xCoord][yCoord].getType() == "bomb") {
+                        if (gameState[xCoord][yCoord].getType().equals( "bomb")) {
                             game.switchCorrectState(xCoord, yCoord);
                             game.changeBombCount(+1);
                         }

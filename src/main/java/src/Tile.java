@@ -82,10 +82,11 @@ public class Tile {
     }
 
     public void displayNeighbors() {
-        String output = "";
+        StringBuilder output = new StringBuilder();
         for (int i = 0; i < neighbours.length; i++) {
 
-            output += neighbours[i] + " ";
+            output.append(neighbours[i]);
+            output.append(" ");
 
 
         }
