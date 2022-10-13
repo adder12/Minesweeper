@@ -79,7 +79,7 @@ public class Difficulty {
                     do{
                         if(gameLength < 5|| gameLength > 40){
                             System.out.println("That number is invalid, please enter a reasonable height for the game board");
-                            gameHeight=scan.nextInt();
+                            gameLength=scan.nextInt();
                         } else {
                             sanity = true;
                         }
