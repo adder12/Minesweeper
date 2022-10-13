@@ -1,3 +1,4 @@
+package src;
 
 import java.util.Scanner;
 
@@ -22,7 +23,7 @@ public class Main {
 
         do {
 
-            game.displaycurrentHidden();
+            game.displayCurrentHidden();
 
             gameStatus = gamePlayLoop(game, scan);
 
@@ -61,6 +62,7 @@ public class Main {
         int xCoord;
         int yCoord;
         char move;
+        System.out.println(game.getFlagCount() + " " + game.getBombCount());
         System.out.println("Please enter the row Coordinate you wish to check?");
         xCoord = getCoord(scan, game.getGameLength()) + 1;
         System.out.println("Please enter the column Coordinate you wish to check?");
@@ -87,6 +89,7 @@ public class Main {
                 case 'f':
                     moveCorrect = true;
                     if (gameState[xCoord][yCoord].getState() == 0) {
+                        // System.out.println("flagged");
                         game.setTileState(xCoord, yCoord, 1);
                         game.changeFlagCount(-1);
                         if (gameState[xCoord][yCoord].getType() == "bomb") {
@@ -97,7 +100,9 @@ public class Main {
                         }
 
                     } else if (gameState[xCoord][yCoord].getState() == 1) {
+                        //  System.out.println("unflagged");
                         game.setTileState(xCoord, yCoord, 0);
+                        game.changeFlagCount(1);
                         if (gameState[xCoord][yCoord].getType() == "bomb") {
                             game.switchCorrectState(xCoord, yCoord);
                             game.changeBombCount(+1);

@@ -1,3 +1,5 @@
+package src;
+
 public class Tile {
 
     protected int xCoord;
@@ -73,7 +75,7 @@ public class Tile {
     public void neighborCount() {
         for (String type : neighbours) {
 
-            if (type == "bomb") {
+            if (type.equals("bomb")) {
                 this.nearbyBombs++;
             }
         }
@@ -82,12 +84,12 @@ public class Tile {
     public void displayNeighbors() {
         String output = "";
         for (int i = 0; i < neighbours.length; i++) {
-            System.out.println(neighbours[0]);
+
             output += neighbours[i] + " ";
 
 
         }
-        System.out.println(output);
+        System.out.println(this.xCoord + " " + this.yCoord + output);
     }
 
 

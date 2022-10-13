@@ -1,3 +1,5 @@
+package src;
+
 public class SafeTile extends Tile {
     boolean revealed;
 
