@@ -197,7 +197,7 @@ public class GameClass {
 
     public void displayCurrentHidden() {
         StringBuilder output = new StringBuilder();
-
+        output.append("   ");
         for (int i = 0; i < gameHeight; i++) {
             output.append("  ");
 
@@ -246,7 +246,11 @@ public class GameClass {
                         output.append( ANSI.colourReset);
                         break;
                     case 2:
+                        if(gameBoard[i][j].getNearbyBombs() != 0){
+output.append(ANSI.colourMagenta);
+                        }else{
                         output.append(ANSI.colourCyan);
+                        }
                         output.append( " ");
                         output.append(gameBoard[i][j].getNearbyBombs());
                         output.append("  ");
@@ -266,6 +270,8 @@ public class GameClass {
 
 
     }
+
+
 
     public void checkNeighbor() {
 
@@ -301,9 +307,7 @@ public class GameClass {
 
 
         if (!gameBoard[xCoord][yCoord].getNeighbourMethodCheck() && gameBoard[xCoord][yCoord].getType().equals("Safe") && !gameBoard[xCoord][yCoord].getType().equals("bomb")) {
-            if (gameBoard[xCoord][yCoord].getType().equals("bomb")) {
-                System.out.println("function performed on bomb");
-            }
+
             setTileState(xCoord, yCoord, 2);
             gameBoard[xCoord][yCoord].setNeighbourMethodCheck();
             for (int k = -1; k <= 1; k++) {
@@ -311,7 +315,7 @@ public class GameClass {
                     if (k != 0 || l != 0) {
                         gameBoard[xCoord + k][yCoord + l].setState(2);
                         if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType().equals("Safe")) {
-                            System.out.println("test");
+
                             this.reveal(xCoord + k, yCoord + l);
 
                         }

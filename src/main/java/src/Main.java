@@ -6,10 +6,24 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
-
+        boolean playAgain = false;
+        char temp = ' ';
+        boolean playerAnswerCorrect = false;
         System.out.println(ANSI.colourCyan + "Hello and welcome to " + ANSI.colourRed + "!!MINESWEEPER!!" + ANSI.colourReset);
-        System.out.println("\nWould you like to play a game?");
+        System.out.println("\nWould you like to play a game? Y/N");
+        temp = scan.next().charAt(0);
+        do {
+            if (Character.toLowerCase(temp) == 'y') {
+                playerAnswerCorrect = true;
+                playAgain = true;
+            } else if (Character.toLowerCase(temp) == 'n'){
+                playerAnswerCorrect = true;
+                playAgain = false;
+            };
+        } while (!playerAnswerCorrect);
 
+
+        while (playAgain == true) {
         Difficulty difficulty = Difficulty.diffChooser(scan);
 
         GameClass game = new GameClass(difficulty);
@@ -36,8 +50,26 @@ public class Main {
             game.displayBoardCurrent();
 
         } else {
+            game.displayBoardCurrent();
             System.out.println("Congratulations Commander, you cleared the field");
+
         }
+
+            System.out.println("Would you like to play again");
+
+            temp = scan.next().charAt(0);
+            do {
+                if (Character.toLowerCase(temp) == 'y') {
+                    playerAnswerCorrect = true;
+                    playAgain = true;
+                } else if (Character.toLowerCase(temp) == 'n'){
+                    playerAnswerCorrect = true;
+                    playAgain = false;
+                };
+            } while (!playerAnswerCorrect);
+
+        }
+        System.out.println("Thanks for playing!!");
     }
 
     public static int getCoord(Scanner scan, int max) {
@@ -62,7 +94,7 @@ public class Main {
         int xCoord;
         int yCoord;
         char move;
-        System.out.println(game.getFlagCount() + " " + game.getBombCount());
+
         System.out.println("Please enter the row Coordinate you wish to check?");
         xCoord = getCoord(scan, game.getGameLength()) + 1;
         System.out.println("Please enter the column Coordinate you wish to check?");
@@ -120,12 +152,13 @@ public class Main {
             return 2;
         } else {
 
-            System.out.println(gameState[xCoord][yCoord].getNearbyBombs());
-            gameState[xCoord][yCoord].displayNeighbors();
+
 
             return 0;
         }
 
     }
+
+
 }
 
