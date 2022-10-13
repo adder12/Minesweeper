@@ -44,7 +44,7 @@ public class Tile {
     public Tile(int xCoord, int yCoord/*, Tile type*/) {
         this.xCoord = xCoord;
         this.yCoord = yCoord;
-        //  this.type = type;
+
     }
 
     public Tile() {

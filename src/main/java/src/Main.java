@@ -82,14 +82,14 @@ public class Main {
 
                     } else {
                         game.reveal(xCoord, yCoord);
-                        //  game.zeroNeighborReveal(xCoord, yCoord);
+
 
                     }
 
                 case 'f':
                     moveCorrect = true;
                     if (gameState[xCoord][yCoord].getState() == 0) {
-                        // System.out.println("flagged");
+
                         game.setTileState(xCoord, yCoord, 1);
                         game.changeFlagCount(-1);
                         if (gameState[xCoord][yCoord].getType().equals("bomb")) {
@@ -100,7 +100,7 @@ public class Main {
                         }
 
                     } else if (gameState[xCoord][yCoord].getState() == 1) {
-                        //  System.out.println("unflagged");
+
                         game.setTileState(xCoord, yCoord, 0);
                         game.changeFlagCount(1);
                         if (gameState[xCoord][yCoord].getType().equals( "bomb")) {
