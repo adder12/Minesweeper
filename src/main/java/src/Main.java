@@ -7,7 +7,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scan = new Scanner(System.in);
         boolean playAgain = false;
-        char temp = ' ';
+        char temp;
         boolean playerAnswerCorrect = false;
         System.out.println(ANSI.colourCyan + "Hello and welcome to " + ANSI.colourRed + "!!MINESWEEPER!!" + ANSI.colourReset);
         System.out.println("\nWould you like to play a game? Y/N");
@@ -19,11 +19,11 @@ public class Main {
             } else if (Character.toLowerCase(temp) == 'n'){
                 playerAnswerCorrect = true;
                 playAgain = false;
-            };
+            }
         } while (!playerAnswerCorrect);
 
 
-        while (playAgain == true) {
+        while (playAgain) {
         Difficulty difficulty = Difficulty.diffChooser(scan);
 
         GameClass game = new GameClass(difficulty);
@@ -58,6 +58,7 @@ public class Main {
             System.out.println("Would you like to play again");
 
             temp = scan.next().charAt(0);
+            playerAnswerCorrect = false;
             do {
                 if (Character.toLowerCase(temp) == 'y') {
                     playerAnswerCorrect = true;
@@ -65,7 +66,9 @@ public class Main {
                 } else if (Character.toLowerCase(temp) == 'n'){
                     playerAnswerCorrect = true;
                     playAgain = false;
-                };
+                } else{
+                    System.out.println("Im sorry that answer was unrecognised, please enter Y/N");
+                }
             } while (!playerAnswerCorrect);
 
         }
