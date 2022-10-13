@@ -71,13 +71,46 @@ public class Difficulty {
                     int gameLength;
                     int gameHeight;
                     int bombs;
+                    boolean sanity = false;
                     System.out.println("You have selected custom difficulty");
                     System.out.println("Please enter the length of game board you wish to play on");
                     gameLength = scan.nextInt();
+
+                    do{
+                        if(gameLength < 5|| gameLength > 40){
+                            System.out.println("That number is invalid, please enter a reasonable height for the game board");
+                            gameHeight=scan.nextInt();
+                        } else {
+                            sanity = true;
+                        }
+                    } while(!sanity);
+
                     System.out.println("Please enter the height of game board you wish to play on");
                     gameHeight = scan.nextInt();
+                    sanity = false;
+                    do{
+                        if(gameHeight < 5 || gameHeight > 40){
+                            System.out.println("That number is invalid, please enter a reasonable height for the game board");
+                            gameHeight = scan.nextInt();
+                        } else {
+                            sanity = true;
+                        }
+                    } while(!sanity);
+
                     System.out.println("You are playing on a " + gameLength + "x" + gameHeight + " board.\n\n How many " + ANSI.colourRed + "BOMBS" + ANSI.colourReset + " would you like to place?");
                     bombs = scan.nextInt();
+                    sanity = false;
+                    do{
+
+                                if(bombs < 1 || bombs > (gameLength*gameHeight)){
+                                System.out.println("That number is invalid, please enter a reasonable number of bombs");
+                                bombs = scan.nextInt();
+                            } else {
+                                    sanity= true;
+                                }
+
+                    } while(!sanity);
+
 
                     chosenDiff = new Difficulty(gameLength, gameHeight, bombs);
                     diffCorrect = true;
