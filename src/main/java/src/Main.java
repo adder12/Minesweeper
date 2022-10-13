@@ -83,7 +83,7 @@ public class Main {
                     } else {
                         game.reveal(xCoord, yCoord);
 
-
+                        break;
                     }
 
                 case 'f':
@@ -108,8 +108,10 @@ public class Main {
                             game.changeBombCount(+1);
                         }
                     }
-
-
+                        break;
+                default:
+                    System.out.println("That move is not recognised, please enter Reveal(r) or Flag(f)");
+                    move = scan.next().charAt(0);
             }
         } while (!moveCorrect);
 

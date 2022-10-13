@@ -81,6 +81,7 @@ public class Difficulty {
 
                     chosenDiff = new Difficulty(gameLength, gameHeight, bombs);
                     diffCorrect = true;
+                    break;
 
                 default:
                     System.out.println("Im sorry, your entry was not a supported difficulty, please choose one of the following difficulties \n\n Easy(E), Medium(M), Hard(H), Custom(C)");

@@ -287,7 +287,7 @@ public class GameClass {
                 gameBoard[i][j].neighborCount();
             }
         }
-        //gameBoard[4][4].displayNeighbors();
+
 
     }
 

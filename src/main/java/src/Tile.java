@@ -13,7 +13,7 @@ public class Tile {
 
     protected int nearbyBombs;
 
-    //  private Tile type;
+
 
 
     public int[] getCoords() {
@@ -73,9 +73,9 @@ public class Tile {
     }
 
     public void neighborCount() {
-        for (String type : neighbours) {
+        for (String neighborType : neighbours) {
 
-            if (type.equals("bomb")) {
+            if (neighborType.equals("bomb")) {
                 this.nearbyBombs++;
             }
         }
