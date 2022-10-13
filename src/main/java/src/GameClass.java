@@ -178,10 +178,10 @@ public class GameClass {
             }
             output.append(" |");
             for (int j = 1; j < gameHeight + 1; j++) {
-               /* if (gameBoard[i][j].type.equals("safe") && gameBoard[i][j].getState() == 2) {
+                if (gameBoard[i][j].type.equals("safe") && gameBoard[i][j].getState() == 2) {
                     output.append(ANSI.colourCyan);
 
-                }*/
+                }
                 switch (gameBoard[i][j].state) {
                     case 0:
                         output.append("????");
@@ -192,15 +192,15 @@ public class GameClass {
                         output.append(ANSI.colourReset);
                         break;
                     case 2:
-                       /* if (gameBoard[i][j].getNearbyBombs() != 0) {
+                        if (gameBoard[i][j].getNearbyBombs() != 0) {
                             output.append(ANSI.colourMagenta);
                         } else {
                             output.append(ANSI.colourCyan);
-                        }*/
+                        }
                         output.append(" ");
                         output.append(gameBoard[i][j].getNearbyBombs());
                         output.append("  ");
-                        //         output.append(ANSI.colourReset);
+                        output.append(ANSI.colourReset);
                         break;
                 }
                 output.append(" ");
