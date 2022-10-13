@@ -82,13 +82,16 @@ public class Difficulty {
                     chosenDiff = new Difficulty(gameLength, gameHeight, bombs);
                     diffCorrect = true;
 
-            }
-            if (!diffCorrect) {
-                System.out.println("Im sorry, your entry was not a supported difficulty, please choose one of the following difficulties \n\n Easy(E), Medium(M), Hard(H), Custom(C)");
-
+                default:
+                    System.out.println("Im sorry, your entry was not a supported difficulty, please choose one of the following difficulties \n\n Easy(E), Medium(M), Hard(H), Custom(C)");
 
             }
-        } while (!diffCorrect);
+
+
+
+
+            }while (!diffCorrect);
+
 
         return chosenDiff;
     }

@@ -12,7 +12,7 @@ public class Main {
 
         Difficulty difficulty = Difficulty.diffChooser(scan);
 
-        Gameboard game = new Gameboard(difficulty);
+        GameClass game = new GameClass(difficulty);
 
         int gameStatus; //0 = playing, 1 = failed, 2 = win
         System.out.println("Hello " + ANSI.colourCyan + "Minesweeper" + ANSI.colourReset);
@@ -57,7 +57,7 @@ public class Main {
     }
 
 
-    public static int gamePlayLoop(Gameboard game, Scanner scan) {
+    public static int gamePlayLoop(GameClass game, Scanner scan) {
         Tile[][] gameState = game.getGameBoard();
         int xCoord;
         int yCoord;

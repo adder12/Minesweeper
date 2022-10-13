@@ -1,6 +1,6 @@
 package src;
 
-public class Gameboard {
+public class GameClass {
 
     private int bombCount;
     private Tile[][] gameBoard;
@@ -48,7 +48,7 @@ public class Gameboard {
         this.bombCount += change;
     }
 
-    public Gameboard(int gameLength, int gameHeight, int bombCount) {
+    public GameClass(int gameLength, int gameHeight, int bombCount) {
         this.bombCount = bombCount;
         this.gameLength = gameLength;
         this.gameHeight = gameHeight;
@@ -58,7 +58,7 @@ public class Gameboard {
 
     }
 
-    public Gameboard(Difficulty difficulty) {
+    public GameClass(Difficulty difficulty) {
         this.bombCount = difficulty.getBombs();
         this.gameLength = difficulty.getGameLength();
         this.gameHeight = difficulty.getGameHeight();
@@ -73,7 +73,7 @@ public class Gameboard {
     public static Tile[][] generateBoard(int gameLength, int gameHeight, int bombCount) {
         int count = bombCount;
         //System.out.println(gameLength + "" + gameHeight);
-        double temp = gameLength * gameHeight;
+        double temp =(double) gameLength * gameHeight;
         double bombChance = count / temp;
 
         // System.out.println(bombChance);
@@ -322,8 +322,8 @@ public class Gameboard {
                     if (k != 0 || l != 0) {
                         gameBoard[xCoord + k][yCoord + l].setState(2);
                         if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 && gameBoard[xCoord + k][yCoord + l].getType().equals("Safe")) {
-
-                            reveal(xCoord + k, yCoord + l);
+                            System.out.println("test");
+                            this.reveal(xCoord + k, yCoord + l);
 
                         }
                     }
