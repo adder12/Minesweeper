@@ -311,7 +311,7 @@ public class GameClass {
     public void reveal(int xCoord, int yCoord) {
 
         // gameBoard[xCoord][yCoord].displayNeighbors();
-        if (!gameBoard[xCoord][yCoord].getNeighbourMethodCheck() && gameBoard[xCoord][yCoord].getType().equals("Safe") && gameBoard[xCoord][yCoord].getState() == 0 && !gameBoard[xCoord][yCoord].getType().equals("bomb")) {
+        if (!gameBoard[xCoord][yCoord].getNeighbourMethodCheck() && gameBoard[xCoord][yCoord].getType().equals("Safe") && !gameBoard[xCoord][yCoord].getType().equals("bomb")) {
             if (gameBoard[xCoord][yCoord].getType().equals("bomb")) {
                 System.out.println("function performed on bomb");
             }
