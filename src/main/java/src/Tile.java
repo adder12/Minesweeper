@@ -31,9 +31,18 @@ public class Tile {
 
     }
 
+    public int getyCoord() {
+        return this.yCoord;
+    }
+
     public int getNearbyBombs() {
 
         return nearbyBombs;
+    }
+
+    public boolean getCorrectFlag() {
+        return this.correctFlag;
+
     }
 
     public Tile(int xCoord, int yCoord/*, Tile type*/) {
