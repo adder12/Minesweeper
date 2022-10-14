@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GameClass.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MavenMinesweeper</a> &gt; <a href="index.source.html" class="el_package">src</a> &gt; <span class="el_source">GameClass.java</span></div><h1>GameClass.java</h1><pre class="source lang-java linenums">package src;
+
+public class GameClass {
+
+    private int bombCount;
+    private Tile[][] gameBoard;
+    private int gameLength;
+    private int gameHeight;
+
+    private int flagCount;
+
+    public void changeFlagCount(int change) {
+<span class="nc" id="L13">        this.flagCount += change;</span>
+<span class="nc" id="L14">    }</span>
+
+    public int getFlagCount() {
+<span class="nc" id="L17">        return flagCount;</span>
+    }
+
+    public int getBombCount() {
+<span class="nc" id="L21">        return bombCount;</span>
+    }
+
+    public int getGameLength() {
+<span class="nc" id="L25">        return gameLength;</span>
+    }
+
+    public int getGameHeight() {
+<span class="nc" id="L29">        return gameHeight;</span>
+    }
+
+    public Tile[][] getGameBoard() {
+<span class="nc" id="L33">        return gameBoard;</span>
+    }
+
+    public void setTileState(int xCoord, int yCoord, int state) {
+<span class="nc" id="L37">        this.gameBoard[xCoord][yCoord].state = state;</span>
+<span class="nc" id="L38">    }</span>
+
+    public void changeBombCount(int change) {
+<span class="nc" id="L41">        this.bombCount += change;</span>
+<span class="nc" id="L42">    }</span>
+
+<span class="nc" id="L44">    public GameClass(int gameLength, int gameHeight, int bombCount) {</span>
+<span class="nc" id="L45">        this.bombCount = bombCount;</span>
+<span class="nc" id="L46">        this.gameLength = gameLength;</span>
+<span class="nc" id="L47">        this.gameHeight = gameHeight;</span>
+<span class="nc" id="L48">        this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);</span>
+<span class="nc" id="L49">        checkNeighbor();</span>
+<span class="nc" id="L50">        this.flagCount = bombCount;</span>
+        //                            this.displayBoardFull();
+<span class="nc" id="L52">    }</span>
+
+<span class="nc" id="L54">    public GameClass(Difficulty difficulty) {</span>
+<span class="nc" id="L55">        this.bombCount = difficulty.getBombs();</span>
+<span class="nc" id="L56">        this.gameLength = difficulty.getGameLength();</span>
+<span class="nc" id="L57">        this.gameHeight = difficulty.getGameHeight();</span>
+<span class="nc" id="L58">        this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);</span>
+<span class="nc" id="L59">        checkNeighbor();</span>
+<span class="nc" id="L60">        this.flagCount = difficulty.getBombs();</span>
+
+
+<span class="nc" id="L63">    }</span>
+
+    public static Tile[][] generateBoard(int gameLength, int gameHeight, int bombCount) {
+<span class="nc" id="L66">        int count = bombCount;</span>
+<span class="nc" id="L67">        double temp = (double) gameLength * gameHeight;</span>
+<span class="nc" id="L68">        double bombChance = count / temp;</span>
+        double randChance;
+<span class="nc" id="L70">        Tile[][] board = emptyBoard(gameLength, gameHeight);</span>
+        do {
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            for (int i = 1; i &lt;= gameLength; i++) {</span>
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                for (int j = 1; j &lt;= gameHeight; j++) {</span>
+<span class="nc" id="L74">                    randChance = Math.random();</span>
+<span class="nc bnc" id="L75" title="All 6 branches missed.">                    if (randChance &lt; bombChance &amp;&amp; count != 0 &amp;&amp; !board[i][j].type.equals(&quot;Bomb&quot;)) {</span>
+<span class="nc" id="L76">                        board[i][j] = new Bomb(i, j);</span>
+<span class="nc" id="L77">                        count--;</span>
+<span class="nc bnc" id="L78" title="All 2 branches missed.">                    } else if (!board[i][j].type.equals(&quot;bomb&quot;)) {</span>
+<span class="nc" id="L79">                        board[i][j] = new SafeTile(i, j);</span>
+                    }
+                }
+            }
+<span class="nc bnc" id="L83" title="All 2 branches missed.">        } while (count != 0);</span>
+<span class="nc" id="L84">        return board;</span>
+    }
+
+    public static Tile[][] emptyBoard(int length, int height) {
+<span class="nc" id="L88">        Tile[][] board = new Tile[length + 2][height + 2];</span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">        for (int i = 0; i &lt; board.length; i++) {</span>
+<span class="nc bnc" id="L90" title="All 2 branches missed.">            for (int j = 0; j &lt; board[i].length; j++) {</span>
+<span class="nc" id="L91">                board[i][j] = new NullTile(i, j);</span>
+            }
+        }
+<span class="nc" id="L94">        return board;</span>
+    }
+
+    public void displayBoardFull() {
+<span class="nc" id="L98">        StringBuilder output = new StringBuilder();</span>
+
+<span class="nc bnc" id="L100" title="All 2 branches missed.">        for (int i = 0; i &lt; gameBoard.length; i++) {</span>
+<span class="nc" id="L101">            output.append(&quot;\n&quot;);</span>
+<span class="nc bnc" id="L102" title="All 2 branches missed.">            for (int j = 0; j &lt; gameBoard[i].length; j++) {</span>
+<span class="nc bnc" id="L103" title="All 2 branches missed.">                if (gameBoard[i][j].type.equals(&quot;bomb&quot;)) {</span>
+<span class="nc" id="L104">                    output.append(ANSI.colourRed);</span>
+<span class="nc bnc" id="L105" title="All 2 branches missed.">                } else if (gameBoard[i][j].type.equals(&quot;Safe&quot;)) {</span>
+<span class="nc" id="L106">                    output.append(ANSI.colourCyan);</span>
+                }
+<span class="nc" id="L108">                output.append(gameBoard[i][j].type);</span>
+<span class="nc" id="L109">                output.append(ANSI.colourReset);</span>
+<span class="nc" id="L110">                output.append(&quot;, &quot;);</span>
+            }
+        }
+<span class="nc" id="L113">        System.out.println(output);</span>
+<span class="nc" id="L114">    }</span>
+
+    public void displayBoardCurrent() {
+<span class="nc" id="L117">        StringBuilder output = new StringBuilder();</span>
+<span class="nc" id="L118">        output.append(&quot;    &quot;);</span>
+<span class="nc bnc" id="L119" title="All 2 branches missed.">        for (int i = 0; i &lt; gameHeight; i++) {</span>
+<span class="nc" id="L120">            output.append(&quot;  &quot;);</span>
+<span class="nc bnc" id="L121" title="All 2 branches missed.">            if (i + 1 &gt; 9) {</span>
+<span class="nc" id="L122">                output.append(i + 1);</span>
+            } else {
+<span class="nc" id="L124">                output.append(&quot;0&quot;);</span>
+<span class="nc" id="L125">                output.append((i + 1));</span>
+            }
+<span class="nc" id="L127">            output.append(&quot; &quot;);</span>
+        }
+<span class="nc" id="L129">        output.append(&quot;\n    &quot;);</span>
+<span class="nc" id="L130">        output.append(&quot;_____&quot;.repeat(Math.max(0, gameHeight)));</span>
+
+<span class="nc bnc" id="L132" title="All 2 branches missed.">        for (int i = 1; i &lt; gameLength + 1; i++) {</span>
+<span class="nc" id="L133">            output.append(&quot;\n&quot;);</span>
+<span class="nc" id="L134">            output.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L135" title="All 2 branches missed.">            if (i &gt; 9) {</span>
+<span class="nc" id="L136">                output.append(i);</span>
+            } else {
+<span class="nc" id="L138">                output.append(&quot;0&quot;);</span>
+<span class="nc" id="L139">                output.append((i));</span>
+            }
+<span class="nc" id="L141">            output.append(&quot; |&quot;);</span>
+<span class="nc bnc" id="L142" title="All 2 branches missed.">            for (int j = 1; j &lt; gameHeight + 1; j++) {</span>
+<span class="nc bnc" id="L143" title="All 2 branches missed.">                if (gameBoard[i][j].type.equals(&quot;bomb&quot;)) {</span>
+<span class="nc" id="L144">                    output.append(ANSI.colourRed);</span>
+<span class="nc bnc" id="L145" title="All 2 branches missed.">                } else if (gameBoard[i][j].type.equals(&quot;Safe&quot;)) {</span>
+<span class="nc" id="L146">                    output.append(ANSI.colourCyan);</span>
+                }
+<span class="nc" id="L148">                output.append(gameBoard[i][j].type);</span>
+<span class="nc" id="L149">                output.append(ANSI.colourReset);</span>
+<span class="nc" id="L150">                output.append(&quot; &quot;);</span>
+            }
+        }
+<span class="nc" id="L153">        System.out.println(output);</span>
+<span class="nc" id="L154">    }</span>
+
+    public void displayCurrentHidden() {
+<span class="nc" id="L157">        StringBuilder output = new StringBuilder();</span>
+<span class="nc" id="L158">        output.append(&quot;    &quot;);</span>
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        for (int i = 0; i &lt; gameHeight; i++) {</span>
+<span class="nc" id="L160">            output.append(&quot;  &quot;);</span>
+<span class="nc bnc" id="L161" title="All 2 branches missed.">            if (i + 1 &gt; 9) {</span>
+<span class="nc" id="L162">                output.append(i + 1);</span>
+            } else {
+<span class="nc" id="L164">                output.append(&quot;0&quot;);</span>
+<span class="nc" id="L165">                output.append((i + 1));</span>
+            }
+<span class="nc" id="L167">            output.append(&quot; &quot;);</span>
+        }
+<span class="nc" id="L169">        output.append(&quot;\n    &quot;);</span>
+<span class="nc" id="L170">        output.append(&quot;_____&quot;.repeat(Math.max(0, gameHeight)));</span>
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        for (int i = 1; i &lt; gameLength + 1; i++) {</span>
+<span class="nc" id="L172">            output.append(&quot;\n&quot;);</span>
+<span class="nc" id="L173">            output.append(&quot; &quot;);</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (i &gt; 9) {</span>
+<span class="nc" id="L175">                output.append(i);</span>
+            } else {
+<span class="nc" id="L177">                output.append(&quot;0&quot;);</span>
+<span class="nc" id="L178">                output.append((i));</span>
+            }
+<span class="nc" id="L180">            output.append(&quot; |&quot;);</span>
+<span class="nc bnc" id="L181" title="All 2 branches missed.">            for (int j = 1; j &lt; gameHeight + 1; j++) {</span>
+<span class="nc bnc" id="L182" title="All 4 branches missed.">                if (gameBoard[i][j].type.equals(&quot;safe&quot;) &amp;&amp; gameBoard[i][j].getState() == 2) {</span>
+<span class="nc" id="L183">                    output.append(ANSI.colourCyan);</span>
+
+                }
+<span class="nc bnc" id="L186" title="All 4 branches missed.">                switch (gameBoard[i][j].state) {</span>
+                    case 0:
+<span class="nc" id="L188">                        output.append(&quot;????&quot;);</span>
+<span class="nc" id="L189">                        break;</span>
+                    case 1:
+<span class="nc" id="L191">                        output.append(ANSI.colourYellow);</span>
+<span class="nc" id="L192">                        output.append(&quot;FLAG&quot;);</span>
+<span class="nc" id="L193">                        output.append(ANSI.colourReset);</span>
+<span class="nc" id="L194">                        break;</span>
+                    case 2:
+<span class="nc bnc" id="L196" title="All 2 branches missed.">                        if (gameBoard[i][j].getNearbyBombs() != 0) {</span>
+<span class="nc" id="L197">                            output.append(ANSI.colourMagenta);</span>
+                        } else {
+<span class="nc" id="L199">                            output.append(ANSI.colourCyan);</span>
+                        }
+<span class="nc" id="L201">                        output.append(&quot; &quot;);</span>
+<span class="nc" id="L202">                        output.append(gameBoard[i][j].getNearbyBombs());</span>
+<span class="nc" id="L203">                        output.append(&quot;  &quot;);</span>
+<span class="nc" id="L204">                        output.append(ANSI.colourReset);</span>
+                        break;
+                }
+<span class="nc" id="L207">                output.append(&quot; &quot;);</span>
+            }
+        }
+<span class="nc" id="L210">        System.out.println(output);</span>
+<span class="nc" id="L211">    }</span>
+
+    public void checkNeighbor() {
+
+<span class="nc bnc" id="L215" title="All 2 branches missed.">        for (int i = 1; i &lt;= gameLength; i++) {</span>
+<span class="nc bnc" id="L216" title="All 2 branches missed.">            for (int j = 1; j &lt;= gameHeight; j++) {</span>
+<span class="nc" id="L217">                int n = 0;</span>
+<span class="nc bnc" id="L218" title="All 2 branches missed.">                for (int k = -1; k &lt;= 1; k++) {</span>
+
+<span class="nc bnc" id="L220" title="All 2 branches missed.">                    for (int l = -1; l &lt;= 1; l++) {</span>
+<span class="nc bnc" id="L221" title="All 4 branches missed.">                        if (k != 0 || l != 0) {</span>
+
+<span class="nc" id="L223">                            gameBoard[i][j].neighbours[n] = gameBoard[i + k][j + l].getType();</span>
+<span class="nc" id="L224">                            n++;</span>
+                        }
+                    }
+                }
+<span class="nc" id="L228">                gameBoard[i][j].neighborCount();</span>
+            }
+        }
+<span class="nc" id="L231">    }</span>
+
+    public void switchCorrectState(int xCoord, int yCoord) {
+<span class="nc" id="L234">        gameBoard[xCoord][yCoord].setCorrectFlag();</span>
+<span class="nc" id="L235">    }</span>
+
+    public void reveal(int xCoord, int yCoord) {
+<span class="nc bnc" id="L238" title="All 6 branches missed.">        if (!gameBoard[xCoord][yCoord].getNeighbourMethodCheck() &amp;&amp; gameBoard[xCoord][yCoord].getType().equals(&quot;Safe&quot;) &amp;&amp; !gameBoard[xCoord][yCoord].getType().equals(&quot;bomb&quot;)) {</span>
+<span class="nc" id="L239">            setTileState(xCoord, yCoord, 2);</span>
+<span class="nc" id="L240">            gameBoard[xCoord][yCoord].setNeighbourMethodCheck();</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">            for (int k = -1; k &lt;= 1; k++) {</span>
+<span class="nc bnc" id="L242" title="All 2 branches missed.">                for (int l = -1; l &lt;= 1; l++) {</span>
+<span class="nc bnc" id="L243" title="All 4 branches missed.">                    if (k != 0 || l != 0) {</span>
+<span class="nc bnc" id="L244" title="All 2 branches missed.">                        if (!gameBoard[xCoord + k][yCoord + l].getType().equals(&quot;bomb&quot;))</span>
+<span class="nc" id="L245">                            gameBoard[xCoord + k][yCoord + l].setState(2);</span>
+<span class="nc bnc" id="L246" title="All 4 branches missed.">                        if (gameBoard[xCoord + k][yCoord + l].getNearbyBombs() == 0 &amp;&amp; gameBoard[xCoord + k][yCoord + l].getType().equals(&quot;Safe&quot;)) {</span>
+<span class="nc" id="L247">                            this.reveal(xCoord + k, yCoord + l);</span>
+                        }
+                    }
+                }
+            }
+        }
+<span class="nc" id="L253">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

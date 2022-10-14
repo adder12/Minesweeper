@@ -12,8 +12,10 @@ public class Bomb extends Tile {
 
     }
 
-
+    @Override
     public boolean getCorrectFlag() {
         return correctFlag;
     }
+
+
 }

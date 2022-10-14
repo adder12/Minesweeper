@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Difficulty.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MavenMinesweeper</a> &gt; <a href="index.source.html" class="el_package">src</a> &gt; <span class="el_source">Difficulty.java</span></div><h1>Difficulty.java</h1><pre class="source lang-java linenums">package src;
+
+import java.util.Scanner;
+
+public class Difficulty {
+    private int gameLength;
+    private int gameHeight;
+    private int bombs;
+    public int getGameLength() {
+<span class="nc" id="L10">        return gameLength;</span>
+    }
+    public void setGameLength(int gameLength) {
+<span class="nc" id="L13">        this.gameLength = gameLength;</span>
+<span class="nc" id="L14">    }</span>
+    public int getGameHeight() {
+<span class="nc" id="L16">        return gameHeight;</span>
+    }
+    public void setGameHeight(int gameHeight) {
+<span class="nc" id="L19">        this.gameHeight = gameHeight;</span>
+<span class="nc" id="L20">    }</span>
+    public int getBombs() {
+<span class="nc" id="L22">        return bombs;</span>
+    }
+    public void setBombs(int bombs) {
+<span class="nc" id="L25">        this.bombs = bombs;</span>
+<span class="nc" id="L26">    }</span>
+<span class="nc" id="L27">    public Difficulty(int gameLength, int gameHeight, int bombs) {</span>
+<span class="nc" id="L28">        this.gameLength = gameLength;</span>
+<span class="nc" id="L29">        this.gameHeight = gameHeight;</span>
+<span class="nc" id="L30">        this.bombs = bombs;</span>
+<span class="nc" id="L31">    }</span>
+
+    public static Difficulty diffChooser(Scanner scan) {
+<span class="nc" id="L34">        Difficulty easy = new Difficulty(10, 8, 10);</span>
+<span class="nc" id="L35">        Difficulty medium = new Difficulty(18, 14, 40);</span>
+<span class="nc" id="L36">        Difficulty hard = new Difficulty(24, 20, 99);</span>
+        char enteredDiff;
+<span class="nc" id="L38">        Difficulty chosenDiff = null;</span>
+<span class="nc" id="L39">        boolean diffCorrect = false;</span>
+<span class="nc" id="L40">        System.out.println(&quot;\n\n\nWhat Difficulty would you like to play, Easy(E), Medium(M), Hard(H) or Custom(C)&quot;);</span>
+        do {
+<span class="nc" id="L42">            enteredDiff = Character.toLowerCase(scan.next().charAt(0));</span>
+<span class="nc bnc" id="L43" title="All 5 branches missed.">            switch (enteredDiff) {</span>
+                case 'e':
+<span class="nc" id="L45">                    diffCorrect = true;</span>
+<span class="nc" id="L46">                    chosenDiff = easy;</span>
+<span class="nc" id="L47">                    break;</span>
+                case 'm':
+<span class="nc" id="L49">                    diffCorrect = true;</span>
+<span class="nc" id="L50">                    chosenDiff = medium;</span>
+<span class="nc" id="L51">                    break;</span>
+                case 'h':
+<span class="nc" id="L53">                    chosenDiff = hard;</span>
+<span class="nc" id="L54">                    diffCorrect = true;</span>
+<span class="nc" id="L55">                    break;</span>
+                case 'c':
+                    int gameLength;
+                    int gameHeight;
+                    int bombs;
+<span class="nc" id="L60">                    boolean sanity = false;</span>
+<span class="nc" id="L61">                    System.out.println(&quot;You have selected custom difficulty&quot;);</span>
+<span class="nc" id="L62">                    System.out.println(&quot;Please enter the length of game board you wish to play on&quot;);</span>
+<span class="nc" id="L63">                    gameLength = scan.nextInt();</span>
+                    do{
+<span class="nc bnc" id="L65" title="All 4 branches missed.">                        if(gameLength &lt; 5|| gameLength &gt; 40){</span>
+<span class="nc" id="L66">                            System.out.println(&quot;That number is invalid, please enter a reasonable height for the game board&quot;);</span>
+<span class="nc" id="L67">                            gameLength=scan.nextInt();</span>
+                        } else {
+<span class="nc" id="L69">                            sanity = true;</span>
+                        }
+<span class="nc bnc" id="L71" title="All 2 branches missed.">                    } while(!sanity);</span>
+<span class="nc" id="L72">                    System.out.println(&quot;Please enter the height of game board you wish to play on&quot;);</span>
+<span class="nc" id="L73">                    gameHeight = scan.nextInt();</span>
+<span class="nc" id="L74">                    sanity = false;</span>
+                    do{
+<span class="nc bnc" id="L76" title="All 4 branches missed.">                        if(gameHeight &lt; 5 || gameHeight &gt; 40){</span>
+<span class="nc" id="L77">                            System.out.println(&quot;That number is invalid, please enter a reasonable height for the game board&quot;);</span>
+<span class="nc" id="L78">                            gameHeight = scan.nextInt();</span>
+                        } else {
+<span class="nc" id="L80">                            sanity = true;</span>
+                        }
+<span class="nc bnc" id="L82" title="All 2 branches missed.">                    } while(!sanity);</span>
+<span class="nc" id="L83">                    System.out.println(&quot;You are playing on a &quot; + gameLength + &quot;x&quot; + gameHeight + &quot; board.\n\n How many &quot; + ANSI.colourRed + &quot;BOMBS&quot; + ANSI.colourReset + &quot; would you like to place?&quot;);</span>
+<span class="nc" id="L84">                    bombs = scan.nextInt();</span>
+<span class="nc" id="L85">                    sanity = false;</span>
+                    do{
+<span class="nc bnc" id="L87" title="All 4 branches missed.">                        if(bombs &lt; 1 || bombs &gt; (gameLength*gameHeight)){</span>
+<span class="nc" id="L88">                            System.out.println(&quot;That number is invalid, please enter a reasonable number of bombs&quot;);</span>
+<span class="nc" id="L89">                            bombs = scan.nextInt();</span>
+                        } else {
+<span class="nc" id="L91">                            sanity= true;</span>
+                        }
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                    } while(!sanity);</span>
+<span class="nc" id="L94">                    chosenDiff = new Difficulty(gameLength, gameHeight, bombs);</span>
+<span class="nc" id="L95">                    diffCorrect = true;</span>
+<span class="nc" id="L96">                    break;</span>
+
+                default:
+<span class="nc" id="L99">                    System.out.println(&quot;Im sorry, your entry was not a supported difficulty, please choose one of the following difficulties \n\n Easy(E), Medium(M), Hard(H), Custom(C)&quot;);</span>
+            }
+<span class="nc bnc" id="L101" title="All 2 branches missed.">            }while (!diffCorrect);</span>
+<span class="nc" id="L102">        return chosenDiff;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

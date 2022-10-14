@@ -46,8 +46,9 @@ public class GameClass {
         this.gameLength = gameLength;
         this.gameHeight = gameHeight;
         this.gameBoard = generateBoard(gameLength, gameHeight, bombCount);
+        checkNeighbor();
         this.flagCount = bombCount;
-        this.displayBoardFull();
+        //                            this.displayBoardFull();
     }
 
     public GameClass(Difficulty difficulty) {

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Main.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">MavenMinesweeper</a> &gt; <a href="index.source.html" class="el_package">src</a> &gt; <span class="el_source">Main.java</span></div><h1>Main.java</h1><pre class="source lang-java linenums">package src;
+
+import java.util.Scanner;
+
+
+<span class="nc" id="L6">public class Main {</span>
+    public static void main(String[] args) {
+<span class="nc" id="L8">        Scanner scan = new Scanner(System.in);</span>
+<span class="nc" id="L9">        boolean playAgain = false;</span>
+        char temp;
+<span class="nc" id="L11">        boolean playerAnswerCorrect = false;</span>
+<span class="nc" id="L12">        System.out.println(ANSI.colourCyan + &quot;Hello and welcome to &quot; + ANSI.colourRed + &quot;!!MINESWEEPER!!&quot; + ANSI.colourReset);</span>
+<span class="nc" id="L13">        System.out.println(&quot;\nWould you like to play a game? Y/N&quot;);</span>
+<span class="nc" id="L14">        temp = scan.next().charAt(0);</span>
+        do {
+<span class="nc bnc" id="L16" title="All 2 branches missed.">            if (Character.toLowerCase(temp) == 'y') {</span>
+<span class="nc" id="L17">                playerAnswerCorrect = true;</span>
+<span class="nc" id="L18">                playAgain = true;</span>
+<span class="nc bnc" id="L19" title="All 2 branches missed.">            } else if (Character.toLowerCase(temp) == 'n'){</span>
+<span class="nc" id="L20">                playerAnswerCorrect = true;</span>
+<span class="nc" id="L21">                playAgain = false;</span>
+            }
+<span class="nc bnc" id="L23" title="All 2 branches missed.">        } while (!playerAnswerCorrect);</span>
+
+
+<span class="nc bnc" id="L26" title="All 2 branches missed.">        while (playAgain) {</span>
+<span class="nc" id="L27">        Difficulty difficulty = Difficulty.diffChooser(scan);</span>
+
+<span class="nc" id="L29">        GameClass game = new GameClass(difficulty);</span>
+
+        int gameStatus; //0 = playing, 1 = failed, 2 = win
+<span class="nc" id="L32">        System.out.println(&quot;Hello &quot; + ANSI.colourCyan + &quot;Minesweeper&quot; + ANSI.colourReset);</span>
+
+<span class="nc" id="L34">        System.out.println(&quot;\n Your mission today is to locate all &quot; + game.getBombCount() + &quot; bombs&quot;);</span>
+<span class="nc" id="L35">        System.out.println(&quot;There are &quot; + game.getBombCount() + &quot; bombs remaining&quot;);</span>
+
+
+        do {
+<span class="nc" id="L39">            game.displayCurrentHidden();</span>
+<span class="nc" id="L40">            gameStatus = gamePlayLoop(game, scan);</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        } while (gameStatus == 0);</span>
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if (gameStatus == 1) {</span>
+<span class="nc" id="L44">            System.out.println(&quot;Uh oh!!! You hit a bomb, unlucky&quot;);</span>
+<span class="nc" id="L45">            game.displayBoardCurrent();</span>
+        } else {
+<span class="nc" id="L47">            game.displayBoardCurrent();</span>
+<span class="nc" id="L48">            System.out.println(&quot;Congratulations Commander, you cleared the field&quot;);</span>
+
+        }
+<span class="nc" id="L51">            System.out.println(&quot;Would you like to play again&quot;);</span>
+<span class="nc" id="L52">            temp = scan.next().charAt(0);</span>
+<span class="nc" id="L53">            playerAnswerCorrect = false;</span>
+            do {
+<span class="nc bnc" id="L55" title="All 2 branches missed.">                if (Character.toLowerCase(temp) == 'y') {</span>
+<span class="nc" id="L56">                    playerAnswerCorrect = true;</span>
+<span class="nc" id="L57">                    playAgain = true;</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">                } else if (Character.toLowerCase(temp) == 'n'){</span>
+<span class="nc" id="L59">                    playerAnswerCorrect = true;</span>
+<span class="nc" id="L60">                    playAgain = false;</span>
+                } else{
+<span class="nc" id="L62">                    System.out.println(&quot;Im sorry that answer was unrecognised, please enter Y/N&quot;);</span>
+                }
+<span class="nc bnc" id="L64" title="All 2 branches missed.">            } while (!playerAnswerCorrect);</span>
+<span class="nc" id="L65">        }</span>
+<span class="nc" id="L66">        System.out.println(&quot;Thanks for playing!!&quot;);</span>
+<span class="nc" id="L67">    }</span>
+
+    public static int getCoord(Scanner scan, int max) {
+<span class="nc" id="L70">        int coord = scan.nextInt() - 1;</span>
+<span class="nc bnc" id="L71" title="All 4 branches missed.">        while (coord &lt; 0 || coord &gt; max - 1) {</span>
+<span class="nc" id="L72">            System.out.println(&quot;That location is invalid, please enter a valid coordinate&quot;);</span>
+<span class="nc" id="L73">            coord = scan.nextInt() - 1;</span>
+        }
+<span class="nc" id="L75">        return coord;</span>
+    }
+    public static int gamePlayLoop(GameClass game, Scanner scan) {
+<span class="nc" id="L78">        Tile[][] gameState = game.getGameBoard();</span>
+        int xCoord;
+        int yCoord;
+        char move;
+<span class="nc" id="L82">        System.out.println(&quot;Please enter the row Coordinate you wish to check?&quot;);</span>
+<span class="nc" id="L83">        xCoord = getCoord(scan, game.getGameLength()) + 1;</span>
+<span class="nc" id="L84">        System.out.println(&quot;Please enter the column Coordinate you wish to check?&quot;);</span>
+<span class="nc" id="L85">        yCoord = getCoord(scan, game.getGameHeight()) + 1;</span>
+<span class="nc" id="L86">        System.out.println(&quot;you have selected &quot; + xCoord + &quot;,&quot; + yCoord + &quot;. Would you like to reveal(r) or flag/unflag(f) this tile&quot;);</span>
+<span class="nc" id="L87">        move = scan.next().charAt(0);</span>
+<span class="nc" id="L88">        boolean moveCorrect = false;</span>
+        do {
+<span class="nc bnc" id="L90" title="All 3 branches missed.">            switch (Character.toLowerCase(move)) {</span>
+                case 'r':
+<span class="nc" id="L92">                    moveCorrect = true;</span>
+<span class="nc bnc" id="L93" title="All 2 branches missed.">                    if (gameState[xCoord][yCoord].getType().equals(&quot;bomb&quot;) ){</span>
+<span class="nc" id="L94">                        return 1;</span>
+                    } else {
+<span class="nc" id="L96">                        game.reveal(xCoord, yCoord);</span>
+<span class="nc" id="L97">                        break;</span>
+                    }
+                case 'f':
+<span class="nc" id="L100">                    moveCorrect = true;</span>
+<span class="nc bnc" id="L101" title="All 2 branches missed.">                    if (gameState[xCoord][yCoord].getState() == 0) {</span>
+<span class="nc" id="L102">                        game.setTileState(xCoord, yCoord, 1);</span>
+<span class="nc" id="L103">                        game.changeFlagCount(-1);</span>
+<span class="nc bnc" id="L104" title="All 2 branches missed.">                        if (gameState[xCoord][yCoord].getType().equals(&quot;bomb&quot;)) {</span>
+<span class="nc" id="L105">                            game.switchCorrectState(xCoord, yCoord);</span>
+<span class="nc" id="L106">                            game.changeBombCount(-1);</span>
+                        }
+<span class="nc bnc" id="L108" title="All 2 branches missed.">                    } else if (gameState[xCoord][yCoord].getState() == 1) {</span>
+<span class="nc" id="L109">                        game.setTileState(xCoord, yCoord, 0);</span>
+<span class="nc" id="L110">                        game.changeFlagCount(1);</span>
+<span class="nc bnc" id="L111" title="All 2 branches missed.">                        if (gameState[xCoord][yCoord].getType().equals( &quot;bomb&quot;)) {</span>
+<span class="nc" id="L112">                            game.switchCorrectState(xCoord, yCoord);</span>
+<span class="nc" id="L113">                            game.changeBombCount(+1);</span>
+                        }
+                    }
+                        break;
+                default:
+<span class="nc" id="L118">                    System.out.println(&quot;That move is not recognised, please enter Reveal(r) or Flag(f)&quot;);</span>
+<span class="nc" id="L119">                    move = scan.next().charAt(0);</span>
+            }
+<span class="nc bnc" id="L121" title="All 2 branches missed.">        } while (!moveCorrect);</span>
+<span class="nc bnc" id="L122" title="All 4 branches missed.">        if (game.getBombCount() == 0 &amp;&amp; game.getFlagCount() == 0) {</span>
+<span class="nc" id="L123">            return 2;</span>
+        } else {
+
+
+
+<span class="nc" id="L128">            return 0;</span>
+        }
+
+    }
+
+
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
