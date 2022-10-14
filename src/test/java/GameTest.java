@@ -28,11 +28,11 @@ public class GameTest {
         Assertions.assertEquals(10, testGame.getGameLength(), "Game length getter failed");
     }
 
-    @Test
+   /* @Test
     public void testChangeFlagCount() {
         testGame.changeFlagCount(-1);
         Assertions.assertEquals(9, testGame.getFlagCount(), "The change flagCount method has failed");
-    }
+    }*/
 
     @Test
     public void changeBombCount() {
